@@ -7,27 +7,33 @@ NB. a christmas miracle
 getData =: {{ <;._2 ] 1!:1 y }}
 
 NB. prioritize
+NB. get an item's 'priority'
 P =: ([: >: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'&i.)
 
 NB. Part 1
 
 NB. compartmentalize
-NB. split y in 2
+NB. split string into 2 even sized strings down the middle
+NB. returns array of 2 boxed strings
 C =: (([: (-:,:-:) #) <;._3 ])
 
-NB. find the matching character in 2 strings
-M =: monad define 
-	fst =. > 0 { y
-	snd =. > 1 { y
-	({. I. +/ fst =/ snd) { snd
-)
+NB. set intersection
+NB. thank you J wiki!
+SI =: (e. # [)
 
-] SolutionA =: +/ ; ([: P [: M C) each data
+NB. match
+NB. find the matching characters in an array of boxed strings
+M =:  {{ ~. > (SI&.:>)/ y }}
+
+NB. compartmentalize, find the matches, prioritize, and sum
+] SolutionA =: +/ ; ([: P [: M C) each getData input_path
 
 
 NB. Part 2
 
-NB. group by 3s
+NB. group 3
+NB. group array into arrays of 3
 G3 =: ((3 ,: 3) <;._3 ])
 
-NB. just find the 1 intersecting character in 3 strings
+NB. group by 3, find the matches, prioritize, and sum
+] SolutionB =: +/ P ; M each G3 getData input_path
