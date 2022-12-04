@@ -13,7 +13,22 @@ NB. (LF=s) <;.2 ] s
 getData =: {{ {{C 0 2 { y}} each (LF=s) <;.2 s =.1!:1 y }}
 
 sample_path =: <'/home/peter/src/JProjects/aoc22/data/d2/input_sample.txt'
-actual_path =: <'/home/peter/src/JProjects/aoc22/data/d2/input.txt'
+input_path =: <'/home/peter/src/JProjects/aoc22/data/d2/input.txt'
 ut_path =: <'/home/peter/src/JProjects/aoc22/data/d2/unit_test.txt'
 
-] SolutionA =. +/{{(0{y) S (1{y)}}&> getData actual_path
+] SolutionA =. +/{{(0{y) S (1{y)}}&> getData input_path
+
+NB. Solution B
+sample_b_path =: <'/home/peter/src/JProjects/aoc22/data/d2/input_sample_b.txt'
+
+NB. fix the results
+NB. take the input (Theirs, Result) and output (Theirs, InputToProduceDesiredResult)
+F =:  dyad define
+ theirs=. x
+	yours=. (y + 3*x) { (2 0 1 0 1 2 1 2 0)
+	theirs, yours
+)
+
+NB. preprocess the input data with F (fix) and calculate the result the same way
+NB. as in Solution A
+] SolutionB =. +/{{(0{y) S (1{y)}}&> {{< (0{y) F (1{y)}}&> getData input_path
