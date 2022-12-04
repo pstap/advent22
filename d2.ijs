@@ -1,34 +1,48 @@
+NB. input files
+input         =: '/home/peter/src/JProjects/advent22/data/d2'
+sample_path   =: < input,'/input_sample.txt'
+input_path    =: < input,'/input.txt'
+ut_path       =: < input,'/unit_test.txt'
+sample_b_path =: < input,'/input_sample_b.txt'
+
 NB. convert char to RPS.
-NB. x is a char array
-NB. A/X = 0, B/Y = 1, C/Z = 2
+NB. x is a char array of 'ABCXYZ'
+NB. convert chars into numbered equiv.
+NB. 0,1,2 were chosen to fit J's indexing scheme
+NB. so I could just use a lookup table.
+NB. A,X = Rock     = 0
+NB. B,Y = Paper    = 1
+NB. C,Z = Scissors = 2
 C =: {{ N - 88 65 {~ 88 > N=.a.i.y }}
 
-NB. score
-NB. x = their choice, y = my choice
-S =: {{ (y + 3*x) { (4 8 3 1 5 9 7 2 6) }}
-
 NB. parse the input data
-NB. x boxed path
-NB. (LF=s) <;.2 ] s
-getData =: {{ {{C 0 2 { y}} each (LF=s) <;.2 s =.1!:1 y }}
+NB. convert the input into numbers using C above
+NB. x is a boxed path
+getData =: {{ ([: C (0 2)&{)&.> (LF=s) <;.2 s =.1!:1 y }}
 
-sample_path =: <'/home/peter/src/JProjects/aoc22/data/d2/input_sample.txt'
-input_path =: <'/home/peter/src/JProjects/aoc22/data/d2/input.txt'
-ut_path =: <'/home/peter/src/JProjects/aoc22/data/d2/unit_test.txt'
+NB. score
+NB. calculate score for a single round
+NB. y = array of length 2. (their choice, my choice)
+NB. lookup the score in scoring
+scoring =: 3 3 $ 4 8 3 1 5 9 7 2 6
+S =: (scoring&({::~))
 
-] SolutionA =. +/{{(0{y) S (1{y)}}&> getData input_path
+NB. Part A
 
-NB. Solution B
-sample_b_path =: <'/home/peter/src/JProjects/aoc22/data/d2/input_sample_b.txt'
+NB. Score each round and sum up the total
+] SolutionA =. +/S&> getData input_path
 
-NB. fix the results
-NB. take the input (Theirs, Result) and output (Theirs, InputToProduceDesiredResult)
-F =:  dyad define
- theirs=. x
-	yours=. (y + 3*x) { (2 0 1 0 1 2 1 2 0)
-	theirs, yours
-)
+NB. Part B
+
+NB. fix the results.
+NB. convert from (their choice, result) to (their choice, my choice)
+NB. where my choice would produce the given result
+NB. 0 = Loss
+NB. 1 = Tie
+NB. 2 = Win
+fixings =: 3 3 $ 2 0 1 0 1 2 1 2 0  NB. no turkey
+F =: ((0&{),(fixings&({::~)))
 
 NB. preprocess the input data with F (fix) and calculate the result the same way
-NB. as in Solution A
-] SolutionB =. +/{{(0{y) S (1{y)}}&> {{< (0{y) F (1{y)}}&> getData input_path
+NB. as in Solution A.
+] SolutionB =. +/S&> F&.> getData input_path
