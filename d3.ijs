@@ -1,3 +1,5 @@
+NB. Advent of Code 2022 Day 3
+
 NB. input files
 input         =: '/home/peter/src/JProjects/advent22/data/d3'
 sample_path   =: < input,'/input_sample.txt'

@@ -1,3 +1,5 @@
+NB. Advent of Code 2022 Day 2
+
 NB. input files
 input         =: '/home/peter/src/JProjects/advent22/data/d2'
 sample_path   =: < input,'/input_sample.txt'
@@ -27,12 +29,12 @@ NB. lookup the score in scoring
 scoring =: 3 3 $ 4 8 3 1 5 9 7 2 6
 S =: (scoring&({::~))
 
-NB. Part A
+NB. Part 1
 
 NB. Score each round and sum up the total
 ] SolutionA =. +/S&> getData input_path
 
-NB. Part B
+NB. Part 2
 
 NB. fix the results.
 NB. convert from (their choice, result) to (their choice, my choice)

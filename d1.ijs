@@ -1,5 +1,14 @@
-NB. Solutions
+NB. Advent of Code 2022 Day 1
+
+NB. input file
+input      =: '/home/peter/src/JProjects/advent22/data/d1'
+input_path =: < input,'/input.txt'
+
+NB. parse the input data
 getData =: {{ {{; ". each y }} each  <;._1 (<'') , <;._2 ] 1!:1 y }}
-data =. getData <'/home/peter/src/JProjects/aoc22/data/d1/input.txt'
-] Solution1 =. >./+/&>data
-] Solution2 =. +/ 3 {. \:~ +/&>data
+
+NB. Solution 1
+] Solution1 =. >./+/&> getData input_path
+
+NB. Solution 2
+] Solution2 =. +/ 3 {. \:~ +/&> getData input_path
