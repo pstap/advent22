@@ -10,14 +10,14 @@ getData =: {{ <;._2 ] 1!:1 y }}
 
 NB. prioritize
 NB. get an item's 'priority'
-P =: ([: >: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'&i.)
+P =: [: >: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'&i.
 
 NB. Part 1
 
 NB. compartmentalize
 NB. split string into 2 even sized strings down the middle
 NB. returns array of 2 boxed strings
-C =: (([: (-:,:-:) #) <;._3 ])
+C =: (-:&#) ({.;}.) ]
 
 NB. set intersection
 NB. thank you J wiki!
