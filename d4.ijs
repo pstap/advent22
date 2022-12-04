@@ -7,12 +7,10 @@ sample_path   =: < input,'/input_sample.txt'
 input_path    =: < input,'/input.txt'
 
 
-parseRange =. monad define
-	split =. ".;._1 '-', y
-	s =. 0 { split
-	e =. 1 { split
+parseRange =: {{
+	's e' =. ".;._1 '-', y
 	s+i.>:e-s
-)
+}}
 
 NB. parse the input data
 NB. convert the input into numbers using C above
@@ -34,8 +32,7 @@ NB. Part 1
 
 NB. compare
 C =: monad define 
- f =. > 0 { y
- s =. > 1 { y
+ 'f s' =. y
 
 	NB. intersection
  i =. (s e. f) # s
@@ -45,10 +42,9 @@ C =: monad define
 ] Solution1 =: +/ ; C each getData input_path
 
 NB. Part 2
-C2 =: monad define 
- f =. > 0 { y
- s =. > 1 { y
+C2 =: {{
+ 'f s' =. y
  * # (s e. f) # s
-)
+}}
 
 ] Solution2 =: +/ ; C2 each getData input_path
